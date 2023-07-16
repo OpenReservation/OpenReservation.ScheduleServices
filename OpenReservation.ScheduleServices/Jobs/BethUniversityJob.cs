@@ -3,7 +3,6 @@ using AngleSharp.Html.Parser;
 using Hangfire;
 using OpenReservation.ScheduleServices.Services;
 using WeihanLi.Common.Helpers;
-using WeihanLi.Extensions;
 
 namespace OpenReservation.ScheduleServices.Jobs;
 
@@ -21,12 +20,18 @@ public sealed class BethUniversityJob: AbstractJob
         CancellationToken cancellationToken)
     {
         var url = "http://aov.zzu.edu.cn/sss/zbisapi.dll/query7";
-        using var response = await HttpHelper.HttpClient.PostAsFormAsync(url, new KeyValuePair<string, string>[]
+        using var request = new HttpRequestMessage(HttpMethod.Post, url)
         {
-            new("impower", "2"),
-            new("text1", "23410511151826"),
-            new("B1", "查询")
-        });
+            Content = new FormUrlEncodedContent(new KeyValuePair<string, string>[]
+            {
+                new("impower", "2"),
+                new("text1", "23410511151826"),
+                new("B1", "查询")
+            })
+        };
+        request.Headers.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.82");
+        request.Headers.Referrer = new Uri("http://ao.zzu.edu.cn/");
+        using var response = await HttpHelper.HttpClient.SendAsync(request, cancellationToken);
         if (!response.IsSuccessStatusCode)
         {
             Logger.LogWarning("{Summary} {ResponseStatusCode}", "GetResponse failed", response.StatusCode);
