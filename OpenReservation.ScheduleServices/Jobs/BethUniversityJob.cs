@@ -1,5 +1,6 @@
 using System.Text;
 using AngleSharp.Html.Parser;
+using Hangfire;
 using OpenReservation.ScheduleServices.Services;
 using WeihanLi.Common.Helpers;
 using WeihanLi.Extensions;
@@ -13,7 +14,9 @@ public sealed class BethUniversityJob: AbstractJob
     public BethUniversityJob(ILoggerFactory loggerFactory, IServiceProvider serviceProvider) : base(loggerFactory, serviceProvider)
     {
     }
-    
+
+    public override string CronExpression => Cron.Hourly(1);
+
     protected override async Task ExecuteInternalAsync(IServiceProvider scopeServiceProvider,
         CancellationToken cancellationToken)
     {
