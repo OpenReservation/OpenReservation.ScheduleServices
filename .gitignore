@@ -482,3 +482,9 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# k8s secrets
+secret.yml
+secret.yaml
+secrets.yml
+secrets.yaml

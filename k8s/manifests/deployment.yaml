@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: schedule-services
+  namespace: default
+  labels:
+    app: schedule-services
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: schedule-services
+  minReadySeconds: 0
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: schedule-services
+    spec:
+      containers:        
+        - name: schedule-services
+          image: openreservation/schedule-services:latest
+          imagePullPolicy: Always
+          env:
+          - name: DingBot_WebHookUrl
+            valueFrom:
+              secretKeyRef:
+                name: my-secrets
+                key: DingBot_WebHookUrl
+          resources:
+            limits:
+              memory: "256Mi"
+              cpu: "200m"
+          readinessProbe:
+            httpGet:
+              path: /api/health/ready
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /api/health/live
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 10
+          ports:
+            - containerPort: 80
