@@ -1,4 +1,6 @@
 using System.Text;
+using System.Text.Encodings.Web;
+using System.Text.Json;
 using dotenv.net;
 using Hangfire;
 using Hangfire.MemoryStorage;
@@ -11,7 +13,15 @@ Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddLogging(x => x.AddJsonConsole(options =>
+{
+    options.TimestampFormat = "yyyy-MM-dd HH:mm:ss";
+    options.JsonWriterOptions = new JsonWriterOptions()
+    {
+        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+        MaxDepth = 32
+    };
+}));
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
