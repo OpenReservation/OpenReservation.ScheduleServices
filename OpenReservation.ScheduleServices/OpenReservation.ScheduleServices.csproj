@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <InvariantGlobalization>true</InvariantGlobalization>
     <LangVersion>preview</LangVersion>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,10 +17,12 @@
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0-preview.6.23329.11" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     <PackageReference Include="WeihanLi.Common" Version="1.0.59" />
-
   </ItemGroup>
-
-
-
+  
+  <ItemGroup>
+    <Content Include="..\.dockerignore">
+      <Link>.dockerignore</Link>
+    </Content>
+  </ItemGroup>
 
 </Project>
