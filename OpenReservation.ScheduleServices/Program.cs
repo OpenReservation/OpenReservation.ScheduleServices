@@ -23,9 +23,6 @@ builder.Services.AddLogging(x => x.AddJsonConsole(options =>
     };
 }));
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 builder.Services.AddHangfire(config =>
 {
@@ -40,16 +37,8 @@ builder.Services.AddHangfireServer(options =>
 });
 
 builder.Services.RegisterAssemblyTypesAsImplementedInterfaces(typeof(IJob).Assembly);
-// builder.Services.AddHostedService<JobRegisterService>();
 
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
 
 app.MapHangfireDashboard();
 app.MapControllers();
