@@ -40,13 +40,13 @@ spec:
             httpGet:
               path: /api/health/ready
               port: 8080
-            initialDelaySeconds: 60
+            initialDelaySeconds: 30
             periodSeconds: 10
           livenessProbe:
             httpGet:
               path: /api/health/live
               port: 8080
-            initialDelaySeconds: 60
+            initialDelaySeconds: 15
             periodSeconds: 10
           ports:
-            - containerPort: 80
+            - containerPort: 8080

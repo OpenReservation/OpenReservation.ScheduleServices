@@ -3,8 +3,6 @@ kind: Service
 metadata:
   name: schedule-services
   namespace: default
-  annotations:
-    prometheus.io/should_be_scraped: "true"
   labels:
     app: schedule-services
 spec:
