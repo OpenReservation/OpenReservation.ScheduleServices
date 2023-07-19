@@ -33,7 +33,7 @@ builder.Services.AddHangfire(config =>
 });
 builder.Services.AddHangfireServer(options =>
 {
-    options.WorkerCount = Environment.ProcessorCount * 2;
+    options.WorkerCount = Environment.ProcessorCount * 4;
 });
 
 builder.Services.RegisterAssemblyTypesAsImplementedInterfaces(typeof(IJob).Assembly);
@@ -42,5 +42,6 @@ var app = builder.Build();
 
 app.MapHangfireDashboard();
 app.MapControllers();
+app.Map("/", () => "Hello world");
 
 app.Run();
