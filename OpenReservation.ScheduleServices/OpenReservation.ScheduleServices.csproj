@@ -14,7 +14,7 @@
     <PackageReference Include="dotenv.net" Version="3.1.2" />
     <PackageReference Include="Hangfire.AspNetCore" Version="1.8.3" />
     <PackageReference Include="Hangfire.MemoryStorage" Version="1.8.0" />
-    <PackageReference Include="WeihanLi.Common" Version="1.0.59" />
+    <PackageReference Include="WeihanLi.Common" Version="1.0.60-preview-20231105-053855" />
   </ItemGroup>
   
   <ItemGroup>
