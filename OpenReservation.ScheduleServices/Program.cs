@@ -5,6 +5,7 @@ using dotenv.net;
 using Hangfire;
 using Hangfire.MemoryStorage;
 using OpenReservation.ScheduleServices;
+using ReferenceResolver;
 
 DotEnv.Load();
 // register to support chinese encoding
@@ -22,6 +23,8 @@ builder.Services.AddLogging(x => x.AddJsonConsole(options =>
         MaxDepth = 32
     };
 }));
+builder.Services.AddSingleton<INuGetHelper, NuGetHelper>();
+
 builder.Services.AddControllers();
 
 builder.Services.AddHangfire(config =>
