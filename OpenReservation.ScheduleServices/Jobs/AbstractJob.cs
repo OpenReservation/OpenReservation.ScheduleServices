@@ -1,4 +1,5 @@
 using Hangfire;
+using OpenReservation.ScheduleServices.Services;
 
 namespace OpenReservation.ScheduleServices.Jobs;
 
@@ -19,6 +20,7 @@ public abstract class AbstractJob: IJob
     public virtual string JobName { get; }
     public virtual string CronExpression { get; }
     protected ILogger Logger => _logger;
+    
     public async Task ExecuteAsync(CancellationToken cancellationToken)
     {
         await using var scope = _serviceProvider.CreateAsyncScope();
@@ -34,6 +36,8 @@ public abstract class AbstractJob: IJob
         {
             _logger.LogError(e, "{Summary} {JobName}",
                 "Execute job exception", JobName);
+            await scope.ServiceProvider.GetRequiredService<INotificationService>()
+                .SendNotificationAsync($"Exception when execute job {JobName}, exception: {e}");
         }
     }
 
