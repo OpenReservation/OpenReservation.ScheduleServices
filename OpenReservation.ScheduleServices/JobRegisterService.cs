@@ -6,7 +6,7 @@ public sealed class JobRegisterService(IServiceProvider appServices): Background
 {
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        foreach (var job in appServices.GetRequiredService<IEnumerable<IJob>>())
+        foreach (var job in appServices.GetServices<IJob>())
         {
             RecurringJob.AddOrUpdate(job.JobName, () => job.ExecuteAsync(CancellationToken.None), job.CronExpression);
         }
