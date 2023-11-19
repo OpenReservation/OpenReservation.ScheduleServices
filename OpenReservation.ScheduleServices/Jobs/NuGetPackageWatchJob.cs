@@ -9,7 +9,7 @@ namespace OpenReservation.ScheduleServices.Jobs;
 
 public sealed class NuGetPackageWatchJob : AbstractJob
 {
-    private readonly ConcurrentDictionary<string, NuGetVersion> _versions = new();
+    private static readonly ConcurrentDictionary<string, NuGetVersion> Versions = new();
     
     public NuGetPackageWatchJob(ILoggerFactory loggerFactory, IServiceProvider serviceProvider) : base(loggerFactory, serviceProvider)
     {
@@ -35,11 +35,11 @@ public sealed class NuGetPackageWatchJob : AbstractJob
                 continue;
             }
             
-            if (_versions.TryGetValue(pkgId, out var version))
+            if (Versions.TryGetValue(pkgId, out var version))
             {
                 if (packageVersion != version)
                 {
-                    _versions[pkgId] = packageVersion;
+                    Versions[pkgId] = packageVersion;
                     Logger.LogInformation("Package `{PackageId}` latest version changed to {PackageVersion}", 
                         pkgId, packageVersion);
                     // notification
@@ -54,7 +54,7 @@ public sealed class NuGetPackageWatchJob : AbstractJob
             }
             else
             {
-                _versions[pkgId] = packageVersion;
+                Versions[pkgId] = packageVersion;
                 Logger.LogInformation("Package `{PackageId}` latest version is {PackageVersion}", 
                     pkgId, packageVersion);
             }
