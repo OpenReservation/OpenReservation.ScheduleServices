@@ -15,4 +15,5 @@ RUN dotnet publish "OpenReservation.ScheduleServices.csproj" -c Release -o /app/
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+USER app
 ENTRYPOINT ["dotnet", "OpenReservation.ScheduleServices.dll"]
