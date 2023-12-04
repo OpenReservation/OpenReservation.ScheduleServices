@@ -4,7 +4,6 @@ using System.Text.Json;
 using dotenv.net;
 using Hangfire;
 using Hangfire.MemoryStorage;
-using Microsoft.AspNetCore.Mvc;
 using OpenReservation.ScheduleServices;
 using OpenReservation.ScheduleServices.Services;
 using ReferenceResolver;
@@ -48,12 +47,12 @@ builder.Services.RegisterAssemblyTypesAsImplementedInterfaces(typeof(IJob).Assem
 var app = builder.Build();
 
 app.MapHangfireDashboard();
-app.MapControllers();
 
 app.Map("/", () => "Hello world").ShortCircuit();
 app.MapRuntimeInfo().ShortCircuit();
 app.MapPost("/api/notification-test",
     (INotificationService notificationService) => Result.Success(notificationService.SendNotificationAsync("test")))
     .ShortCircuit();
+app.MapControllers();
 
 app.Run();
