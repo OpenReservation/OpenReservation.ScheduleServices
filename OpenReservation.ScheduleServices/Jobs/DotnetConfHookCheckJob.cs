@@ -9,7 +9,7 @@ public sealed class DotnetConfHookCheckJob : AbstractJob
     {
     }
 
-    public override string CronExpression => Cron.Minutely();
+    public override string CronExpression => Cron.Never();
 
     protected override async Task ExecuteInternalAsync(IServiceProvider scopeServiceProvider, CancellationToken cancellationToken)
     {
