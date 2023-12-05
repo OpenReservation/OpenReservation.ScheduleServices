@@ -11,7 +11,7 @@ using WeihanLi.Common.Models;
 using WeihanLi.Web.Extensions;
 
 DotEnv.Load();
-// register to support chinese encoding
+// register to support Chinese encoding
 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
 var builder = WebApplication.CreateBuilder(args);
@@ -50,9 +50,6 @@ app.MapHangfireDashboard();
 
 app.Map("/", () => "Hello world").ShortCircuit();
 app.MapRuntimeInfo().ShortCircuit();
-app.MapPost("/api/notification-test",
-    (INotificationService notificationService) => Result.Success(notificationService.SendNotificationAsync("test")))
-    .ShortCircuit();
 app.MapControllers();
 
 app.Run();
