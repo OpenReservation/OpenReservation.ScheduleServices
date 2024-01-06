@@ -488,3 +488,5 @@ secret.yml
 secret.yaml
 secrets.yml
 secrets.yaml
+# local app config
+appsettings.Development.json

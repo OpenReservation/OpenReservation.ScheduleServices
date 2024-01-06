@@ -1,3 +1,4 @@
+using System.Net;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -5,6 +6,7 @@ using dotenv.net;
 using Hangfire;
 using Hangfire.MemoryStorage;
 using OpenReservation.ScheduleServices;
+using OpenReservation.ScheduleServices.Jobs;
 using OpenReservation.ScheduleServices.Services;
 using ReferenceResolver;
 using WeihanLi.Common.Models;
@@ -27,6 +29,11 @@ builder.Services.AddLogging(x => x.AddJsonConsole(options =>
     };
 }));
 builder.Services.AddSingleton<INuGetHelper, NuGetHelper>();
+builder.Services.AddHttpClient(nameof(WeatherQueryJob))
+    .ConfigurePrimaryHttpMessageHandler(_ => new HttpClientHandler()
+    {
+        AutomaticDecompression = DecompressionMethods.All
+    });
 
 builder.Services.AddControllers();
 
