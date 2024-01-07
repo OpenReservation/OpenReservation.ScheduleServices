@@ -44,12 +44,17 @@ steps:
     docker push $(imageName)
     docker push $(latestImageName)
   displayName: 'Push docker image'
-- task: SSH@0
-  displayName: 'Run shell inline on remote machine'
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
-  inputs:
-    sshEndpoint: 'weihanli-vm'
-    runOptions: inline
 
-    inline: |
-      kubectl set image deployment/$(serviceName) $(serviceName)=$(imageName)
+- task: Kubernetes@1
+  displayName: 'kubectl update deployment'
+  inputs:
+    kubernetesServiceEndpoint: 'aks-hk-01'
+    command: 'apply'
+    arguments: '-f https://raw.githubusercontent.com/OpenReservation/OpenReservation.ScheduleServices/main/k8s/manifests/deployment.yaml'
+
+- task: Kubernetes@1
+  displayName: 'kubectl set image'
+  inputs:
+    kubernetesServiceEndpoint: 'aks-hk-01'
+    command: 'set'
+    arguments: 'image deployment/$(serviceName) $(serviceName)=$(imageName)'
