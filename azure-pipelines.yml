@@ -1,7 +1,7 @@
 trigger:
   branches:
     include:
-    - '*'  # must quote since "*" is a YAML reserved character; we want a string
+    - 'main'  # must quote since "*" is a YAML reserved character; we want a string
   paths:
     include:
     - '*'
