@@ -19,7 +19,7 @@ public sealed class NotificationService : INotificationService
             msgtype = "text",
             text = new
             {
-                content = $"{msg}\n{DateTime.UtcNow.AddHours(8):yyyy-MM-dd HH:mm:ss} [Amazing]"
+                content = $"{msg}\n[Amazing] {DateTime.UtcNow.AddHours(8):yyyy-MM-dd HH:mm:ss}"
             }
         });
         return response.IsSuccessStatusCode;
