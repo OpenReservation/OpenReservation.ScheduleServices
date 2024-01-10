@@ -49,6 +49,7 @@ builder.Services.AddHangfireServer(options =>
 });
 // register jobs
 builder.Services.RegisterAssemblyTypesAsImplementedInterfaces(t => t.IsAssignableTo(typeof(IJob)), typeof(IJob).Assembly);
+builder.Services.AddHostedService<JobRegisterService>();
 
 builder.Services.AddHttpClient<INotificationService, NotificationService>(client =>
 {
