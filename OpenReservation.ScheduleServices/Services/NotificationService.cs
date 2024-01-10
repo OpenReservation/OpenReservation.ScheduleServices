@@ -10,17 +10,18 @@ public interface INotificationService
 
 public sealed class NotificationService : INotificationService
 {
-    private readonly string _webHookUrl = Guard.NotNullOrEmpty(Environment.GetEnvironmentVariable("DingBot_WebHookUrl"));
+    private readonly HttpClient _httpClient;
+    public NotificationService(HttpClient httpClient)
+    {
+        _httpClient = httpClient;
+    }
 
     public async Task<bool> SendNotificationAsync(string msg)
     {
-        using var response = await HttpHelper.HttpClient.PostAsJsonAsync(_webHookUrl, new
+        using var response = await _httpClient.PostAsJsonAsync("api/notification/DingBot", new
         {
-            msgtype = "text",
-            text = new
-            {
-                content = $"{msg}\n[Amazing] {DateTime.UtcNow.AddHours(8):yyyy-MM-dd HH:mm:ss}"
-            }
+            text = msg,
+            signature = "Amazing"
         });
         return response.IsSuccessStatusCode;
     }

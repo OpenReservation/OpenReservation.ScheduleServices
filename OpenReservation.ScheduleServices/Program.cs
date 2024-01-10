@@ -9,7 +9,6 @@ using OpenReservation.ScheduleServices;
 using OpenReservation.ScheduleServices.Jobs;
 using OpenReservation.ScheduleServices.Services;
 using ReferenceResolver;
-using WeihanLi.Common.Models;
 using WeihanLi.Web.Extensions;
 
 DotEnv.Load();
@@ -48,8 +47,15 @@ builder.Services.AddHangfireServer(options =>
 {
     options.WorkerCount = Environment.ProcessorCount * 4;
 });
+// register jobs
+builder.Services.RegisterAssemblyTypesAsImplementedInterfaces(t => t.IsAssignableTo(typeof(IJob)), typeof(IJob).Assembly);
 
-builder.Services.RegisterAssemblyTypesAsImplementedInterfaces(typeof(IJob).Assembly);
+builder.Services.AddHttpClient<INotificationService, NotificationService>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration.GetRequiredAppSetting("NotificationUrl"));
+    client.DefaultRequestHeaders.TryAddWithoutValidation("X-ApiKey", 
+        builder.Configuration.GetRequiredAppSetting("NotificationAuthApiKey"));
+});
 
 var app = builder.Build();
 

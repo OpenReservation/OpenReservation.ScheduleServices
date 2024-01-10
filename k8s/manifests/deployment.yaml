@@ -27,11 +27,11 @@ spec:
           image: openreservation/schedule-services:latest
           imagePullPolicy: Always
           env:
-          - name: DingBot_WebHookUrl
+          - name: AppSettings__NotificationAuthApiKey
             valueFrom:
               secretKeyRef:
                 name: my-secrets
-                key: DingBot_WebHookUrl
+                key: NotificationAuthApiKey
           - name: QWeatherApiQueryUrl
             valueFrom:
               secretKeyRef:

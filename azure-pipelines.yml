@@ -62,3 +62,13 @@ steps:
     kubernetesServiceEndpoint: 'aks-hk-01'
     command: 'set'
     arguments: 'image deployment/$(serviceName) $(serviceName)=$(imageName)'
+
+- script: |
+    dotnet tool update -g dotnet-execute
+    export PATH="$PATH:$HOME/.dotnet/tools"
+    dotnet-exec "https://github.com/OpenReservation/scripts/blob/main/deploy/azure-pipelines-notification.cs"
+  displayName: 'Push notification'  
+  env:
+    # https://learn.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch#secret-variables
+    # can not directly reference a secret value
+    DingBotWebhookUrl: $(DingBotWebhookUrl)
