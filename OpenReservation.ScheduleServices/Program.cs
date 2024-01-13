@@ -28,11 +28,6 @@ builder.Services.AddLogging(x => x.AddJsonConsole(options =>
     };
 }));
 builder.Services.AddSingleton<INuGetHelper, NuGetHelper>();
-builder.Services.AddHttpClient(nameof(WeatherQueryJob))
-    .ConfigurePrimaryHttpMessageHandler(_ => new HttpClientHandler()
-    {
-        AutomaticDecompression = DecompressionMethods.All
-    });
 
 builder.Services.AddControllers();
 

@@ -1,4 +1,5 @@
 using OpenReservation.ScheduleServices.Services;
+using WeihanLi.Common.Helpers;
 using WeihanLi.Extensions;
 
 namespace OpenReservation.ScheduleServices.Jobs;
@@ -17,9 +18,7 @@ public sealed class WeatherQueryJob(ILoggerFactory loggerFactory, IServiceProvid
             return;
         }
 
-        var client = scopeServiceProvider.GetRequiredService<IHttpClientFactory>()
-            .CreateClient(nameof(WeatherQueryJob));
-        var response = await client.GetFromJsonAsync<WeatherResponse>(weatherQueryUrl, cancellationToken);
+        var response = await HttpHelper.HttpClient.GetFromJsonAsync<WeatherResponse>(weatherQueryUrl, cancellationToken);
         if ("200" != response?.Code)
         {
             Logger.LogError("Invalid response, response code: {ResponseCode}", response?.Code);
