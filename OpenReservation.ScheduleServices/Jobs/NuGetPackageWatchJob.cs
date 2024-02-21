@@ -28,7 +28,7 @@ public sealed class NuGetPackageWatchJob : AbstractJob
         var notificationService = scopeServiceProvider.GetRequiredService<INotificationService>();
         foreach (var pkgId in packageIds)
         {
-            var packageVersion = await nugetHelper.GetLatestPackageVersion(pkgId, true, cancellationToken);
+            var packageVersion = await nugetHelper.GetLatestPackageVersion(pkgId, true, null, cancellationToken);
             if (packageVersion is null)
             {
                 Logger.LogInformation("No version found for package {PackageId}", pkgId);
