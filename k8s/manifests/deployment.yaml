@@ -32,6 +32,16 @@ spec:
               secretKeyRef:
                 name: my-secrets
                 key: NotificationAuthApiKey
+          - name: AppSettings__JdGzfConfig__UserName
+            valueFrom:
+              secretKeyRef:
+                name: my-secrets
+                key: JdGzf__UserName
+          - name: AppSettings__JdGzfConfig__Password
+            valueFrom:
+              secretKeyRef:
+                name: my-secrets
+                key: JdGzf__Password
           - name: QWeatherApiQueryUrl
             valueFrom:
               secretKeyRef:
