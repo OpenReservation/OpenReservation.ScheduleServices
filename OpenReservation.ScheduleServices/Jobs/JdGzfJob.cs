@@ -16,6 +16,8 @@ public sealed class JdGzfJob : AbstractJob
     {
     }
 
+    public override string CronExpression => "10 15,23 * * *";
+
     protected override async Task ExecuteInternalAsync(IServiceProvider scopeServiceProvider, CancellationToken cancellationToken)
     {
         var config = new JdGzfConfig();
