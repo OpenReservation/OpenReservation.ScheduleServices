@@ -27,6 +27,7 @@ builder.Services.AddLogging(x => x.AddJsonConsole(options =>
         MaxDepth = 32
     };
 }));
+builder.Services.AddMemoryCache();
 builder.Services.AddSingleton<INuGetHelper, NuGetHelper>();
 
 builder.Services.AddControllers();
@@ -51,7 +52,7 @@ builder.Services.AddHttpClient<INotificationService, NotificationService>(client
     client.BaseAddress = new Uri(builder.Configuration.GetRequiredAppSetting("NotificationUrl"));
     client.DefaultRequestHeaders.TryAddWithoutValidation("X-ApiKey", 
         builder.Configuration.GetRequiredAppSetting("NotificationAuthApiKey"));
-});
+}).AddStandardResilienceHandler();
 
 var app = builder.Build();
 
