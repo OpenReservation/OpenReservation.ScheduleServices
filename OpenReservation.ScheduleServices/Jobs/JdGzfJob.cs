@@ -54,7 +54,7 @@ public sealed class JdGzfJob : AbstractJob
                 throw new InvalidOperationException("Invalid access token");
             }
 
-            var expiresIn = responseObj?["expires_in"]?.GetValue<int>() ?? 604799;
+            var expiresIn = responseObj?["expires_in"]?.GetValue<int>() ?? 604799; // 7 days
             memoryCache.Set(tokenCacheKey, accessToken, TimeSpan.FromSeconds(expiresIn));
 
             token = accessToken;
@@ -69,7 +69,7 @@ public sealed class JdGzfJob : AbstractJob
         using var getRentingResponse = await HttpHelper.HttpClient.SendAsync(getRentingRequest, cancellationToken);
         getRentingResponse.EnsureSuccessStatusCode();
         var rentingInfoResponse = await getRentingResponse.Content.ReadFromJsonAsync<RentingInfoApiResponse>(cancellationToken);
-        Logger.LogInformation("GetRentingInfo response: {@Response}", getRentingResponse);
+        Logger.LogInformation("GetRentingInfo response: {@Response}", rentingInfoResponse);
         if (rentingInfoResponse?.Data is null)
         {
             throw new InvalidOperationException("Unexpected renting info response");
