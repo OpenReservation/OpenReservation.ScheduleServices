@@ -12,7 +12,7 @@ namespace OpenReservation.ScheduleServices.Jobs;
 
 public sealed class JdGzfJob : AbstractJob
 {
-    public JdGzfJob(ILoggerFactory loggerFactory, IServiceProvider serviceProvider) : base(loggerFactory, serviceProvider)
+    public JdGzfJob(IServiceProvider serviceProvider) : base(serviceProvider)
     {
     }
 

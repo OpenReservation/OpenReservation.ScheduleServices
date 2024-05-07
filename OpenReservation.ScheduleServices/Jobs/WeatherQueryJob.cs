@@ -4,8 +4,8 @@ using WeihanLi.Extensions;
 
 namespace OpenReservation.ScheduleServices.Jobs;
 
-public sealed class WeatherQueryJob(ILoggerFactory loggerFactory, IServiceProvider serviceProvider)
-    : AbstractJob(loggerFactory, serviceProvider)
+public sealed class WeatherQueryJob(IServiceProvider serviceProvider)
+    : AbstractJob(serviceProvider)
 {
     public override string CronExpression => "0 15,23 * * *";
 

@@ -8,13 +8,14 @@ public abstract class AbstractJob: IJob
     private readonly IServiceProvider _serviceProvider;
     private readonly ILogger _logger;
 
-    protected AbstractJob(ILoggerFactory loggerFactory, IServiceProvider serviceProvider)
+    protected AbstractJob(IServiceProvider serviceProvider)
     {
-        _serviceProvider = serviceProvider;
         var jobType = GetType();
-        _logger = loggerFactory.CreateLogger(jobType.Name);
+        _logger = serviceProvider.GetRequiredService<ILoggerFactory>()
+            .CreateLogger(jobType.Name);
         JobName = jobType.Name;
         CronExpression = Cron.Never();
+        _serviceProvider = serviceProvider;
     }
     
     public virtual string JobName { get; }

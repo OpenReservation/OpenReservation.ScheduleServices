@@ -11,7 +11,7 @@ public sealed class NuGetPackageWatchJob : AbstractJob
 {
     private static readonly ConcurrentDictionary<string, NuGetVersion> Versions = new();
     
-    public NuGetPackageWatchJob(ILoggerFactory loggerFactory, IServiceProvider serviceProvider) : base(loggerFactory, serviceProvider)
+    public NuGetPackageWatchJob(IServiceProvider serviceProvider) : base(serviceProvider)
     {
     }
 
