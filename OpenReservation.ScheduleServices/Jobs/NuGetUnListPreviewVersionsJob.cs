@@ -14,7 +14,7 @@ public sealed class NuGetUnListPreviewVersionsJob : AbstractJob
     protected override async Task ExecuteInternalAsync(IServiceProvider scopeServiceProvider, CancellationToken cancellationToken)
     {
         var configuration = scopeServiceProvider.GetRequiredService<IConfiguration>();
-        var packages = configuration.GetAppSetting("UnListNuGetPackages")
+        var packages = configuration.GetAppSetting("DeletePreviewNuGetPackages")
             ?.Split(new[]{','}, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
             ?? [];
         if (packages.IsNullOrEmpty()) return;
@@ -29,7 +29,7 @@ public sealed class NuGetUnListPreviewVersionsJob : AbstractJob
             {
                 if (v.IsPrerelease)
                 {
-                    await packageUpdateResource.Delete(package, v.ToString(), _ => configuration.GetAppSetting("NuGetApiKey"),
+                    await packageUpdateResource.Delete(package, v.ToString(), _ => configuration.GetAppSetting("NuGetDeleteApiKey"),
                         _ => true, true, new NuGetLoggerLoggingAdapter(Logger));
                     Logger.LogInformation("Package [{Package}] version[{PackageVersion}] unlisted",
                         package, v.ToString());
