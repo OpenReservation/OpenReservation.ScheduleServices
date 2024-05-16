@@ -15,8 +15,7 @@
     <PackageReference Include="Hangfire.AspNetCore" Version="1.8.6" />
     <PackageReference Include="Hangfire.MemoryStorage" Version="1.8.0" />
     <PackageReference Include="Microsoft.Extensions.Http.Resilience" Version="8.4.0" />
-    <PackageReference Include="ReferenceResolver" Version="0.19.0" />
-    <PackageReference Include="WeihanLi.Common" Version="1.0.64" />
+    <PackageReference Include="ReferenceResolver" Version="0.20.0-preview-20240515-154245" />
     <PackageReference Include="WeihanLi.Web.Extensions" Version="1.7.0" />
   </ItemGroup>
   
