@@ -32,6 +32,11 @@ spec:
               secretKeyRef:
                 name: my-secrets
                 key: NotificationAuthApiKey
+          - name: AppSettings__NuGetDeleteApiKey
+            valueFrom:
+              secretKeyRef:
+                name: my-secrets
+                key: NuGet__DeleteApiKey
           - name: AppSettings__JdGzfConfig__UserName
             valueFrom:
               secretKeyRef:
