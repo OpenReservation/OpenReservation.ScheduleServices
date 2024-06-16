@@ -20,7 +20,7 @@ public sealed class NuGetUnListPreviewVersionsJob : AbstractJob
         if (packages.IsNullOrEmpty()) return;
         
         var nugetHelper = scopeServiceProvider.GetRequiredService<INuGetHelper>();
-        var sourceRepository = nugetHelper.GetPackageSourceRepositories().First();
+        var sourceRepository = nugetHelper.GetNuGetOrgSourceRepository();
         var packageUpdateResource = sourceRepository.GetResource<PackageUpdateResource>();
         foreach (var package in packages)
         {
