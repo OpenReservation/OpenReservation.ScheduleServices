@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography;
-using System.Text;
-using System.Text.Json.Nodes;
+﻿using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 using Microsoft.Extensions.Caching.Memory;
 using OpenReservation.ScheduleServices.Services;
@@ -37,8 +35,8 @@ public sealed class JdGzfJob : AbstractJob
                 [
                     new("loginType", "0"),
                     new("grant_type", "renter_login"),
-                    new("username", GetEncryptedString(config.UserName, config.AesKey)),
-                    new("password", GetEncryptedString(config.Password, config.AesKey))
+                    new("username", SecurityHelper.AesEncrypt(config.UserName, config.AesKey)),
+                    new("password", SecurityHelper.AesEncrypt(config.Password, config.AesKey))
                 ]
             );
             foreach (var (headerName, headerValue) in GetRequestHeaders())
@@ -95,23 +93,6 @@ public sealed class JdGzfJob : AbstractJob
         var userAgent =
             "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36";
         yield return new("User-Agent", userAgent);
-    }
-
-    private static string GetEncryptedString(string plainText, string key)
-    {
-        using var aesAlg = Aes.Create();
-        aesAlg.Key = key.GetBytes();
-        aesAlg.Mode = CipherMode.ECB;
-        aesAlg.Padding = PaddingMode.PKCS7;
-        
-        var encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
-        using var ms = new MemoryStream();
-        using (var cs = new CryptoStream(ms, encryptor, CryptoStreamMode.Write))
-        {
-            var plainBytes = Encoding.UTF8.GetBytes(plainText);
-            cs.Write(plainBytes);
-        }
-        return Convert.ToHexString(ms.ToArray());
     }
 }
 
