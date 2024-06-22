@@ -1,4 +1,3 @@
-using System.Net;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -6,7 +5,6 @@ using dotenv.net;
 using Hangfire;
 using Hangfire.MemoryStorage;
 using OpenReservation.ScheduleServices;
-using OpenReservation.ScheduleServices.Jobs;
 using OpenReservation.ScheduleServices.Services;
 using ReferenceResolver;
 using WeihanLi.Web.Extensions;
