@@ -59,6 +59,7 @@ var app = builder.Build();
 app.MapHangfireDashboard();
 
 app.Map("/", () => "Hello world").ShortCircuit();
+app.MapConfigInspector().ShortCircuit();
 app.MapRuntimeInfo().ShortCircuit();
 app.MapControllers();
 
