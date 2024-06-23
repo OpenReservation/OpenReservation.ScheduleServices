@@ -55,18 +55,18 @@ spec:
           resources:
             limits:
               memory: "256Mi"
-              cpu: "200m"
+              cpu: "100m"
           readinessProbe:
             httpGet:
               path: /api/health/ready
               port: 8080
-            initialDelaySeconds: 30
+            initialDelaySeconds: 10
             periodSeconds: 10
           livenessProbe:
             httpGet:
               path: /api/health/live
               port: 8080
-            initialDelaySeconds: 15
+            initialDelaySeconds: 10
             periodSeconds: 10
           ports:
             - containerPort: 8080
