@@ -27,13 +27,13 @@ public sealed class NuGetUnListPreviewVersionsJob : AbstractJob
             await foreach (var (_, v) in 
                            nugetHelper.GetPackageVersions(package, true, cancellationToken: cancellationToken))
             {
-                if (v.IsPrerelease)
-                {
-                    await packageUpdateResource.Delete(package, v.ToString(), _ => configuration.GetAppSetting("NuGetDeleteApiKey"),
-                        _ => true, true, new NuGetLoggerLoggingAdapter(Logger));
-                    Logger.LogInformation("Package [{Package}] version[{PackageVersion}] unlisted",
-                        package, v.ToString());
-                }
+                if (!v.IsPrerelease)
+                    continue;
+                
+                await packageUpdateResource.Delete(package, v.ToString(), _ => configuration.GetAppSetting("NuGetDeleteApiKey"),
+                    _ => true, true, new NuGetLoggerLoggingAdapter(Logger));
+                Logger.LogInformation("Package [{Package}] version[{PackageVersion}] unlisted",
+                    package, v.ToString());
             }
         }
     }
