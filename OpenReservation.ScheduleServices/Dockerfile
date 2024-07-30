@@ -7,7 +7,7 @@ COPY ["OpenReservation.ScheduleServices/OpenReservation.ScheduleServices.csproj"
 RUN dotnet restore "OpenReservation.ScheduleServices/OpenReservation.ScheduleServices.csproj"
 COPY . .
 WORKDIR "/src/OpenReservation.ScheduleServices"
-RUN dotnet publish "OpenReservation.ScheduleServices.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "OpenReservation.ScheduleServices.csproj" -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
