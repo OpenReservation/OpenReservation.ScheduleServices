@@ -21,7 +21,7 @@ public sealed class NotificationService : INotificationService
         using var response = await _httpClient.PostAsJsonAsync("api/notification/DingBot", new
         {
             text = msg,
-            signature = "Amazing"
+            signature = "amazingdotnet"
         });
         return response.IsSuccessStatusCode;
     }
