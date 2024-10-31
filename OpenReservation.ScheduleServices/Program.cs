@@ -59,6 +59,9 @@ app.MapHangfireDashboard();
 app.Map("/", () => "Hello world").ShortCircuit();
 app.MapConfigInspector().ShortCircuit();
 app.MapRuntimeInfo().ShortCircuit();
-app.MapControllers();
+
+var healthGroup = app.MapGroup("/api/health");
+healthGroup.MapGet("/live", () => Results.Ok()).ShortCircuit();
+healthGroup.MapGet("/ready", () => Results.Ok()).ShortCircuit();
 
 app.Run();
