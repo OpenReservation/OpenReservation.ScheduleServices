@@ -10,6 +10,7 @@ using ReferenceResolver;
 using WeihanLi.Web.Extensions;
 
 DotEnv.Load();
+
 // register to support Chinese encoding
 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
@@ -27,8 +28,6 @@ builder.Services.AddLogging(x => x.AddJsonConsole(options =>
 }));
 builder.Services.AddMemoryCache();
 builder.Services.AddSingleton<INuGetHelper, NuGetHelper>();
-
-builder.Services.AddControllers();
 
 builder.Services.AddHangfire(config =>
 {
