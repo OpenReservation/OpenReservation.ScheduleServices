@@ -5,17 +5,13 @@ using WeihanLi.Extensions;
 
 namespace OpenReservation.ScheduleServices.Jobs;
 
-public sealed class NuGetUnListPreviewVersionsJob : AbstractJob
+public sealed class NuGetUnListPreviewVersionsJob(IServiceProvider serviceProvider) : AbstractJob(serviceProvider)
 {
-    public NuGetUnListPreviewVersionsJob(IServiceProvider serviceProvider) : base(serviceProvider)
-    {
-    }
-    
     protected override async Task ExecuteInternalAsync(IServiceProvider scopeServiceProvider, CancellationToken cancellationToken)
     {
         var configuration = scopeServiceProvider.GetRequiredService<IConfiguration>();
         var packages = configuration.GetAppSetting("DeletePreviewNuGetPackages")
-            ?.Split(new[]{','}, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            ?.Split([','], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
             ?? [];
         if (packages.IsNullOrEmpty()) return;
         

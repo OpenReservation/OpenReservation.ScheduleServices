@@ -21,7 +21,7 @@ public abstract class AbstractJob: IJob
     public virtual string JobName { get; }
     public virtual string CronExpression { get; }
     protected ILogger Logger => _logger;
-    protected int RetryCount { get; set; } = 3;
+    protected virtual int RetryCount { get; set; } = 3;
     
     public async Task ExecuteAsync(CancellationToken cancellationToken)
     {

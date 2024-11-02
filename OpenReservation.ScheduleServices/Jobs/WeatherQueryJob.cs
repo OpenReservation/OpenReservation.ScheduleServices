@@ -24,7 +24,7 @@ public sealed class WeatherQueryJob(IServiceProvider serviceProvider)
             Logger.LogError("Invalid response, response code: {ResponseCode}", response?.Code);
             return;
         }
-        if(response.Daily is not { Length: > 0})
+        if (response.Daily is not { Length: > 0 })
         {
             Logger.LogError("No data found");
             return;

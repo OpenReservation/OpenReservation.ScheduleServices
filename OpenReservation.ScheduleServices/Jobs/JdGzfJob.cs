@@ -8,12 +8,8 @@ using WeihanLi.Extensions;
 
 namespace OpenReservation.ScheduleServices.Jobs;
 
-public sealed class JdGzfJob : AbstractJob
+public sealed class JdGzfJob(IServiceProvider serviceProvider) : AbstractJob(serviceProvider)
 {
-    public JdGzfJob(IServiceProvider serviceProvider) : base(serviceProvider)
-    {
-    }
-
     protected override async Task ExecuteInternalAsync(IServiceProvider scopeServiceProvider, CancellationToken cancellationToken)
     {
         var config = new JdGzfConfig();

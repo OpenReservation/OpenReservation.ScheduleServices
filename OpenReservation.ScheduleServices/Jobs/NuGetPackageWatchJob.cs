@@ -7,13 +7,9 @@ using WeihanLi.Extensions;
 
 namespace OpenReservation.ScheduleServices.Jobs;
 
-public sealed class NuGetPackageWatchJob : AbstractJob
+public sealed class NuGetPackageWatchJob(IServiceProvider serviceProvider) : AbstractJob(serviceProvider)
 {
     private static readonly ConcurrentDictionary<string, NuGetVersion> Versions = new();
-    
-    public NuGetPackageWatchJob(IServiceProvider serviceProvider) : base(serviceProvider)
-    {
-    }
 
     public override string CronExpression { get; } = Cron.Hourly();
 
