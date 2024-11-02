@@ -21,10 +21,13 @@ public abstract class AbstractJob: IJob
     public virtual string JobName { get; }
     public virtual string CronExpression { get; }
     protected ILogger Logger => _logger;
+    protected int RetryCount { get; set; } = 3;
     
     public async Task ExecuteAsync(CancellationToken cancellationToken)
     {
         await using var scope = _serviceProvider.CreateAsyncScope();
+        var retry = 0;
+        exec:
         try
         {
             _logger.LogInformation("{Summary} {JobName}",
@@ -35,6 +38,15 @@ public abstract class AbstractJob: IJob
         }
         catch (Exception e)
         {
+            if (cancellationToken.IsCancellationRequested)
+            {
+                _logger.LogWarning("Request cancelled");
+                return;
+            }
+            
+            if (retry++ < RetryCount)
+                goto exec;
+            
             _logger.LogError(e, "{Summary} {JobName}",
                 "Execute job exception", JobName);
             await scope.ServiceProvider.GetRequiredService<INotificationService>()
