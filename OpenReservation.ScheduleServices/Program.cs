@@ -14,7 +14,7 @@ DotEnv.Load();
 // register to support Chinese encoding
 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateSlimBuilder(args);
 
 // Add services to the container.
 builder.Services.AddLogging(x => x.AddJsonConsole(options =>
@@ -55,12 +55,13 @@ var app = builder.Build();
 
 app.MapHangfireDashboard();
 
-app.Map("/", () => "Hello world").ShortCircuit();
-app.MapConfigInspector().ShortCircuit();
-app.MapRuntimeInfo().ShortCircuit();
+app.Map("/", () => "Hello world").ShortCircuit().DisableHttpMetrics();
+app.MapConfigInspector().ShortCircuit().DisableHttpMetrics();
+app.MapRuntimeInfo().ShortCircuit().DisableHttpMetrics();
 
 var healthGroup = app.MapGroup("/api/health");
-healthGroup.MapGet("/live", () => Results.Ok()).ShortCircuit();
-healthGroup.MapGet("/ready", () => Results.Ok()).ShortCircuit();
+healthGroup.ShortCircuit().DisableHttpMetrics();
+healthGroup.MapGet("/live", () => Results.Ok());
+healthGroup.MapGet("/ready", () => Results.Ok());
 
 app.Run();
