@@ -59,7 +59,7 @@ app.Map("/", () => "Hello world").ShortCircuit().DisableHttpMetrics();
 app.MapConfigInspector().ShortCircuit().DisableHttpMetrics();
 app.MapRuntimeInfo().ShortCircuit().DisableHttpMetrics();
 
-var healthGroup = app.MapGroup("/api/health");
+var healthGroup = app.MapProbes("/api/health");
 healthGroup.ShortCircuit().DisableHttpMetrics();
 healthGroup.MapGet("/live", () => Results.Ok());
 healthGroup.MapGet("/ready", () => Results.Ok());
