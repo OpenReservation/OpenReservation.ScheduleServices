@@ -3,6 +3,7 @@ WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS publish
 WORKDIR /src
+COPY Directory.Packages.props ./
 COPY ["OpenReservation.ScheduleServices/OpenReservation.ScheduleServices.csproj", "OpenReservation.ScheduleServices/"]
 RUN dotnet restore "OpenReservation.ScheduleServices/OpenReservation.ScheduleServices.csproj"
 COPY . .
