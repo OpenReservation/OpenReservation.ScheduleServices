@@ -68,7 +68,7 @@ steps:
 #     arguments: 'image deployment/$(serviceName) $(serviceName)=$(imageName)'
 
 - script: |
-    dotnet-exec "https://github.com/OpenReservation/scripts/blob/main/deploy/azure-pipelines-notification.cs"
+    dotnet-exec "https://github.com/OpenReservation/scripts/blob/main/deploy/azure-pipelines-notification.cs" < /dev/null
   displayName: 'Push notification'
   env:
     # https://learn.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch#secret-variables
